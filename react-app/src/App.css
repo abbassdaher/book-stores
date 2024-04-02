@@ -36,3 +36,14 @@
     transform: rotate(360deg);
   }
 }
+.mt10 {
+margin-top: 10%;
+}
+
+.title{
+  text-transform: capitalize;
+}
+.books{
+  display: flex;
+  
+}
