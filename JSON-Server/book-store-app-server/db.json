@@ -11,6 +11,12 @@
       "title": "learn nextjs",
       "description": "learn nextjs description",
       "price": "20$"
+    },
+    {
+      "id": "3",
+      "title": "learn php",
+      "description": "learn php description",
+      "price": "25$"
     }
   ]
 }
