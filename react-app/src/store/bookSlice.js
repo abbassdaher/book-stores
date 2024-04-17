@@ -1,23 +1,31 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 // First, create the thunk
-const fetchUserById = createAsyncThunk(
+const getBooks = createAsyncThunk(
     'book/getBooks',
     async (_, thunkAPI) => {
-        const response = await fetch("http://localhost:3005/books")
-        const data = await response.json()
-        return data
+        try {
+            const response = await fetch("http://localhost:3005/books")
+            const data = await response.json()
+            return data
+        } catch (err) {
+            console.log(err);
+        }
+
     },
 )
 
 const bookSlice = createSlice({
     name: "book",
     initialState: { book: null },
-    reducers: {
-        addBook(state) {
-            state.value += 1;
-            console.log(state.value);
-        }
+    reducers: {}
+    ,
+    extraReducers: builder => {
+        builder.addCase(getBooks.pending, (state, action) => { console.log(action); })
+        builder.addCase(getBooks.fulfilled, (state, action) => { console.log(action); })
+        builder.addCase(getBooks.rejected, (state, action) => { console.log(action); })
     }
+
+
 })
 export default bookSlice.reducer
