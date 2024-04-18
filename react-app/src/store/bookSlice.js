@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 // First, create the thunk
-const getBooks = createAsyncThunk(
+export const getBooks = createAsyncThunk(
     'book/getBooks',
     async (_, thunkAPI) => {
         try {

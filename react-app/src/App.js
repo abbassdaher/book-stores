@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useEffect, Dispatch } from "react";
 import logo from './logo.svg';
 import './App.css'
 import NavBar from "./components/NavBar";
@@ -14,7 +14,7 @@ function App() {
       <div className="container mt10">
         <BookForm />
       </div>
-      <hr class="my-4 mx-3" />
+      <hr className="my-4 mx-3" />
       <BookContainer />
     </Fragment>
   );
