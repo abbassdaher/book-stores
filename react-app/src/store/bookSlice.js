@@ -11,11 +11,11 @@ export const getBooks = createAsyncThunk(
             const response = await fetch("http://localhost:3005/books")
             const data = await response.json()
             return data
-            // dispatch({type: 'book/getBooks/fulfilled',payload: undefined})
+            // dispatch({type: 'book/getBooks/fulfilled',payload: data})
 
         } catch (err) {
             console.log(err);
-            // dispatch({type: 'book/getBooks/rejected',payload: undefined})
+            // dispatch({type: 'book/getBooks/rejected',payload: error})
 
         }
 
@@ -31,13 +31,22 @@ export const getBooks = createAsyncThunk(
 
 const bookSlice = createSlice({
     name: "book",
-    initialState: { book: null },
+    initialState: { book: null, isLoading: false },
     reducers: {}
     ,
     extraReducers: builder => {
-        builder.addCase(getBooks.pending, (state, action) => { console.log(action); })
-        builder.addCase(getBooks.fulfilled, (state, action) => { console.log(action); })
-        builder.addCase(getBooks.rejected, (state, action) => { console.log(action); })
+        builder.addCase(getBooks.pending, (state, action) => {
+            state.isLoading = true;
+            console.log(action);
+        })
+        builder.addCase(getBooks.fulfilled, (state, action) => {
+            state.isLoading = false;
+            console.log(action);
+        })
+        builder.addCase(getBooks.rejected, (state, action) => {
+            state.isLoading = false;
+            console.log(action);
+        })
     }
 
 
