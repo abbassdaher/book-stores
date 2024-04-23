@@ -4,7 +4,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 export const getBooks = createAsyncThunk(
     'book/getBooks',
     async (_, thunkAPI) => {
-        const {rejectWithValue} = thunkAPI
+        const { rejectWithValue } = thunkAPI
         // part 2
         // ----------------------------------------------------------------
         // dispatch({type: 'book/getBooks/pending',payload: undefined})
@@ -22,6 +22,23 @@ export const getBooks = createAsyncThunk(
 
     },
 )
+export const insertBook = createAsyncThunk('book/insertBook', async (bookData, thunkAPI) => {
+    const { rejectWithValue } = thunkAPI
+    try {
+        const response = await fetch("http://localhost:3005/books", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8'
+            },
+            body: JSON.stringify(bookData)
+
+        })
+
+    } catch (error) {
+        return rejectWithValue(error.message)
+    }
+})
+
 // part1
 // ----------------------------------------------------------------
 //getBooks: {pendings,fulfilled,rejected}
@@ -32,7 +49,7 @@ export const getBooks = createAsyncThunk(
 
 const bookSlice = createSlice({
     name: "book",
-    initialState: { book: null, isLoading: false, error: null,},
+    initialState: { book: null, isLoading: false, error: null, },
     reducers: {}
     ,
     extraReducers: builder => {
@@ -48,6 +65,23 @@ const bookSlice = createSlice({
             console.log(action);
         })
         builder.addCase(getBooks.rejected, (state, action) => {
+            state.isLoading = false;
+            state.error = action.payload;
+            console.log(action);
+        })
+
+        builder.addCase(insertBook.pending, (state, action) => {
+            state.isLoading = true;
+            state.error = null;
+            console.log(action);
+        })
+        builder.addCase(insertBook.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.error = null;
+            state.book.push(action.payload);
+            console.log(action);
+        })
+        builder.addCase(insertBook.rejected, (state, action) => {
             state.isLoading = false;
             state.error = action.payload;
             console.log(action);
