@@ -33,6 +33,8 @@ export const insertBook = createAsyncThunk('book/insertBook', async (bookData, t
             body: JSON.stringify(bookData)
 
         })
+        const data = await response.json();
+        return data
 
     } catch (error) {
         return rejectWithValue(error.message)
