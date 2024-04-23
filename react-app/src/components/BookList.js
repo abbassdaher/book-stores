@@ -8,9 +8,9 @@ const BookList = ({ isLoading, books }) => {
         <h3 className="title">book list</h3>
         {
           isLoading ? ('Loading...') :
-            (books ? (
+            (books && 
               books.map((book) => (
-                <div className="border p-2 d-flex  w-100 justify-content-between">
+                <div className="border p-2 d-flex  w-100 justify-content-between" key={book.id}>
                   <div className=""> {book.title}</div>
                   <div className="btnGroup">
                     <button type="button" className="btn btn-primary btn-sm  border-0 rounded-0">Read</button>
@@ -18,7 +18,7 @@ const BookList = ({ isLoading, books }) => {
                   </div>
                 </div>
               ))
-            ) : null)}
+            )}
       </div>
     </Fragment>
 
