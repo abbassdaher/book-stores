@@ -1,11 +1,17 @@
 import React, { Fragment, useRef } from 'react'
-import { useDispatch } from 'react-redux'
-import { insertBook } from '../store/bookSlice';
+import { useDispatch, useSelector } from 'react-redux'
+import bookSlice, { getBooks, insertBook } from '../store/bookSlice';
+import auth from '../store/authSlice';
+
+
+
 
 
 const BookForm = () => {
-    const dispatch = useDispatch();
+    const  counter  = useSelector((state) => state.counter)
+    const {isLogedIn} = useSelector((state) => state.auth)
 
+    const dispatch = useDispatch();
     const title = useRef(null)
     const price = useRef(null)
     const description = useRef(null)
@@ -37,7 +43,7 @@ const BookForm = () => {
                     <label className='mt-2' htmlFor="formGroupExampleInput3">description</label>
                     <textarea ref={description} className="form-control" id="formGroupExampleInput3" rows="3"></textarea>
 
-                    <button type="submit" className="btn btn-primary mt-4">submit</button>
+                    <button type="submit" className="btn btn-primary mt-4" disabled={!isLogedIn}>submit</button>
                 </div>
             </form>
         </Fragment>

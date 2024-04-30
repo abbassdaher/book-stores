@@ -51,7 +51,7 @@ export const insertBook = createAsyncThunk('book/insertBook', async (bookData, t
 
 const bookSlice = createSlice({
     name: "book",
-    initialState: { book: null, isLoading: false, error: null, },
+    initialState: { book: null, isLoading: false, error: null, counter: null},
     reducers: {}
     ,
     extraReducers: builder => {
@@ -64,7 +64,8 @@ const bookSlice = createSlice({
             state.isLoading = false;
             state.error = null;
             state.book = action.payload;
-            console.log(action);
+            state.counter = action.payload.length
+            console.log(state.counter);
         })
         builder.addCase(getBooks.rejected, (state, action) => {
             state.isLoading = false;
@@ -81,7 +82,7 @@ const bookSlice = createSlice({
             state.isLoading = false;
             state.error = null;
             state.book.push(action.payload);
-            console.log(action);
+            console.log(state.book);
         })
         builder.addCase(insertBook.rejected, (state, action) => {
             state.isLoading = false;

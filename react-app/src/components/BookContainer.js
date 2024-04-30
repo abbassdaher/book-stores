@@ -14,7 +14,7 @@ export const BookContainer = () => {
     return (
         <Fragment>
             <div className="postContainer container d-flex justify-content-center ">
-                <BookList isLoading={isLoading} books = {book}/>
+                <BookList isLoading={isLoading} books = {book} />
                 <div className="vr mx-2" style={{ height: "200px" }}></div>
                 <BookDetails />
             </div>
