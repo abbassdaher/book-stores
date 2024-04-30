@@ -1,22 +1,10 @@
 {
   "books": [
     {
-      "id": "0",
-      "title": "learn react",
-      "description": "learn react description",
-      "price": "10$"
-    },
-    {
       "id": "1",
       "title": "learn nextjs",
       "description": "learn nextjs description",
       "price": "20$"
-    },
-    {
-      "id": "2",
-      "title": "learn php",
-      "description": "learn php description",
-      "price": "25$"
     }
   ]
 }
