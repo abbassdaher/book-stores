@@ -26,7 +26,9 @@ export const insertBook = createAsyncThunk('book/insertBook', async (bookData, t
     const { rejectWithValue, getState } = thunkAPI
     try {
         // console.log(getState().auth.name);
+        bookData.id = JSON.stringify(getState().Book.counter)
         bookData.userName = getState().auth.name
+         console.log(bookData);
         const response = await fetch("http://localhost:3005/books", {
             method: 'POST',
             headers: {
@@ -104,7 +106,8 @@ const bookSlice = createSlice({
             state.isLoading = false;
             state.error = null;
             state.book.push(action.payload);
-            console.log(state.book);
+            state.counter = state.counter + 1
+            console.log(state.counter);
         })
         builder.addCase(insertBook.rejected, (state, action) => {
             state.isLoading = false;
