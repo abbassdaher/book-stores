@@ -37,13 +37,21 @@
   }
 }
 .mt10 {
-margin-top: 10%;
+  margin-top: 10%;
 }
 
-.title{
+.title {
   text-transform: capitalize;
 }
-.books{
+.books {
   display: flex;
-  
+}
+.app {
+  position: relative;
+}
+.background {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

@@ -6,21 +6,26 @@ import BookForm from "./components/BookForm";
 import BookList from "./components/BookList";
 import BookDetails from "./components/BookDetails";
 import { BookContainer } from "./components/BookContainer";
+import Toast from "./components/ToastComponent";
+import ToastComponent from "./components/ToastComponent";
 
 
 function App() {
-  
+
 
   return (
-    <Fragment>
+    <div className="app" >
     
+      <div className="background"><ToastComponent isEnable="none" /></div>
       <NavBar />
       <div className="container mt10">
         <BookForm />
       </div>
       <hr className="my-4 mx-3" />
       <BookContainer />
-    </Fragment>
+
+
+    </div>
   );
 }
 

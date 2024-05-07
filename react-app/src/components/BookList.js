@@ -23,7 +23,15 @@ const BookList = ({ isLoading, books }) => {
                     <button type="button" className="btn btn-primary btn-sm  border-0 rounded-0" disabled={!isLogedIn}>Read</button>
                     <button type="button" className="btn btn-danger btn-sm border-0 rounded-0" disabled={!isLogedIn} onClick={
                       () => {
-                        dispatch(deleteBook(book.id))
+                        dispatch(deleteBook(book.id)).unwrap()
+                          .then((originalPromiseResult) => {
+                            // handle result here
+                            console.log(originalPromiseResult);
+                          })
+                          .catch((rejectedValueOrSerializedError) => {
+                            // handle error here
+                            console.log(rejectedValueOrSerializedError);
+                          });
                         console.log(book.id)
                       }
                     }>Delete</button>
