@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { showToast } from "./showToastSlice";
 
 // First, create the thunk
 export const getBooks = createAsyncThunk(
@@ -47,7 +48,7 @@ export const insertBook = createAsyncThunk('book/insertBook', async (bookData, t
 
 export const deleteBook = createAsyncThunk('book/deleteBook',
     async (id, thunkAPI) => {
-        const { rejectWithValue } = thunkAPI
+        const { rejectWithValue , dispatch } = thunkAPI
         try {
             const response = await fetch(`http://localhost:3005/books/${id}`, {
                 method: 'DELETE',
@@ -56,12 +57,15 @@ export const deleteBook = createAsyncThunk('book/deleteBook',
                 }
             })
             const data = await response.json();
+            dispatch(showToast(),[dispatch]);
+
             return data;
 
         } catch (error) {
             return rejectWithValue(error.message)
 
         }
+        
 
     })
 

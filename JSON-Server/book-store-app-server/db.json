@@ -2,9 +2,9 @@
   "books": [
     {
       "id": "0",
-      "title": "learn html",
-      "price": "10",
-      "description": "learn html",
+      "title": "",
+      "price": "",
+      "description": "",
       "userName": "abbass daher"
     }
   ]

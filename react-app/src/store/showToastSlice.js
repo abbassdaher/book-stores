@@ -2,10 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const showToastSlice = createSlice({
     name: "showToast",
-    initialState: { showToast: false },
+    initialState: { showToast: "false" },
     reducers: {
-        showToast: (state) => {
-            state.showToast =!state.showToast;
+        showToast: (state,action) => {
+            state.showToast = "true"
+            console.log(state);
         }
     }
 })

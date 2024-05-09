@@ -2,11 +2,15 @@ import { isAllOf } from '@reduxjs/toolkit'
 import React, { Fragment } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteBook } from '../store/bookSlice'
+import { showToast } from '../store/showToastSlice'
 
 const BookList = ({ isLoading, books }) => {
+  const {showToast} = useSelector((state) =>state.showToast)
   const dispatch = useDispatch()
   const counter = useSelector((state) => state.counter)
   const { isLogedIn } = useSelector((state) => state.auth)
+  // console.log(showToast);
+
   return (
 
     <Fragment>
@@ -25,13 +29,16 @@ const BookList = ({ isLoading, books }) => {
                       () => {
                         dispatch(deleteBook(book.id)).unwrap()
                           .then((originalPromiseResult) => {
+                            
                             // handle result here
+                            
                             console.log(originalPromiseResult);
                           })
                           .catch((rejectedValueOrSerializedError) => {
                             // handle error here
                             console.log(rejectedValueOrSerializedError);
                           });
+                         
                         console.log(book.id)
                       }
                     }>Delete</button>
