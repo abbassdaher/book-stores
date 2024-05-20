@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { showToast } from "./showToastSlice";
+import { useState } from "react";
 
 // First, create the thunk
 export const getBooks = createAsyncThunk(
@@ -29,7 +30,7 @@ export const insertBook = createAsyncThunk('book/insertBook', async (bookData, t
         // console.log(getState().auth.name);
         bookData.id = JSON.stringify(getState().Book.counter)
         bookData.userName = getState().auth.name
-         console.log(bookData);
+        console.log(bookData);
         const response = await fetch("http://localhost:3005/books", {
             method: 'POST',
             headers: {
@@ -48,7 +49,8 @@ export const insertBook = createAsyncThunk('book/insertBook', async (bookData, t
 
 export const deleteBook = createAsyncThunk('book/deleteBook',
     async (id, thunkAPI) => {
-        const { rejectWithValue , dispatch } = thunkAPI
+
+        const { rejectWithValue, dispatch } = thunkAPI
         try {
             const response = await fetch(`http://localhost:3005/books/${id}`, {
                 method: 'DELETE',
@@ -57,7 +59,8 @@ export const deleteBook = createAsyncThunk('book/deleteBook',
                 }
             })
             const data = await response.json();
-            dispatch(showToast(),[dispatch]);
+            dispatch(() => showToast());
+
 
             return data;
 
@@ -65,8 +68,27 @@ export const deleteBook = createAsyncThunk('book/deleteBook',
             return rejectWithValue(error.message)
 
         }
-        
 
+
+    })
+
+export const getBook = createAsyncThunk('book/getBook',
+    async (id, thunkAPI) => {
+
+        const { rejectWithValue, dispatch } = thunkAPI
+        try {
+            const response = await fetch(`http://localhost:3005/books/${id}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8'
+                }
+            })
+            const data = await response.json();
+            return data;
+
+        } catch (error) {
+            return rejectWithValue(error.message)
+        }
     })
 
 // part1
@@ -79,7 +101,7 @@ export const deleteBook = createAsyncThunk('book/deleteBook',
 
 const bookSlice = createSlice({
     name: "book",
-    initialState: { book: null, isLoading: false, error: null, counter: null },
+    initialState: { book: null, isLoading: false, error: null, counter: null, bookInfo: null },
     reducers: {}
     ,
     extraReducers: builder => {
@@ -100,7 +122,7 @@ const bookSlice = createSlice({
             state.error = action.payload;
             console.log(action);
         })
-
+        //insert book
         builder.addCase(insertBook.pending, (state, action) => {
             state.isLoading = true;
             state.error = null;
@@ -118,6 +140,7 @@ const bookSlice = createSlice({
             state.error = action.payload;
             console.log(action);
         })
+        //delete Book
         builder.addCase(deleteBook.pending, (state, action) => {
             state.isLoading = true;
             state.error = null;
@@ -130,6 +153,24 @@ const bookSlice = createSlice({
             console.log(state.book);
         })
         builder.addCase(deleteBook.rejected, (state, action) => {
+            state.isLoading = false;
+            state.error = action.payload;
+            console.log(action);
+        })
+        //get Book
+        builder.addCase(getBook.pending, (state, action) => {
+            state.isLoading = true;
+            state.error = null;
+            console.log(action);
+        })
+        builder.addCase(getBook.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.error = null;
+            state.bookInfo = state.book.filter(book => book.id == action.payload.id)
+            state.bookInfo = action.payload;
+            console.log(state.bookInfo);
+        })
+        builder.addCase(getBook.rejected, (state, action) => {
             state.isLoading = false;
             state.error = action.payload;
             console.log(action);
