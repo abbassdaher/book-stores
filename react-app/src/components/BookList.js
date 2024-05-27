@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { deleteBook, getBook } from '../store/bookSlice'
 import { showToast } from '../store/showToastSlice'
 import {getbookID } from '../store/getBookSlice'
+import ToastComponent from './ToastComponent'
 
 const BookList = ({ isLoading, books }) => {
   const { showToast } = useSelector((state) => state.showToast)
@@ -39,7 +40,6 @@ const BookList = ({ isLoading, books }) => {
                       () => {
                         dispatch(deleteBook(book.id)).unwrap()
                           .then((originalPromiseResult) => {
-
                             // handle result here
 
                             console.log(originalPromiseResult);

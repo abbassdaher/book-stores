@@ -1,22 +1,44 @@
 import React, { Fragment, useCallback, useState } from 'react'
 import { useSelector } from 'react-redux';
+import { showToast } from '../store/showToastSlice';
+
+
+
 
 const ToastComponent = () => {
-    const [enable, setEnable] = useState();
-    const { showToast } = useSelector((state) => state.showToast)
-    // const isEnabled = (showToast == "true" ? "visible" : "none")
-    console.log("rerender");
-    // setEnable((prev) => {
-    //     const display = (showToast === "true" ? "visible" : "none")
-    //     console.log(display);
-    // }
-    // )
+    const { isShowToast } = useSelector((state) => state.showToast)
+    const [enableToast, setEnableToast] = useState('none');
+    console.log("re-render");
+    console.log(isShowToast);
+    const toastDivStyle = document.getElementsByClassName('toast')
 
-    console.log(showToast, enable);
+    const toastDiv = () => {
+        // console.log("isShowToast in toastDiv:",isShowToast);
+        const display = (isShowToast === true ? "visible" : "none")
+        console.log("display in toastDiv:",display);
+        
+
+        // (setEnableToast((prev) =>   "visible"  ))
+        // setEnableToast(prev =>{
+        //     return {display};
+        // })
+        return display
+    }
+    const styles = {
+        exampleStyle: {
+            display: toastDiv()
+        }
+      };
+    console.log("div  style: ",styles.exampleStyle);
+    // console.log("state: " + enableToast);
+    // const displayStr = toastDiv()
+    // console.log(displayStr);
+    // setEnableToast(displayStr)
+
+    // console.log(enableToast);
     return (
-        <div className="toast fade show bg-danger" role="alert"
-            aria-live="assertive" aria-atomic="true" style={{ display: "none" }}>
-
+        <div className="toast fade show bg-danger toast" role="alert"
+            aria-live="assertive" aria-atomic="true" style={styles.exampleStyle}>
             <div className="toast-header">
                 <strong className="mr-auto alert-">Deleted Book</strong>
 

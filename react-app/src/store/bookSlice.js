@@ -1,6 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { showToast } from "./showToastSlice";
 import { useState } from "react";
+import ToastComponent from "../components/ToastComponent";
+import { useDispatch } from "react-redux";
+
 
 // First, create the thunk
 export const getBooks = createAsyncThunk(
@@ -57,11 +60,10 @@ export const deleteBook = createAsyncThunk('book/deleteBook',
                 headers: {
                     'Content-Type': 'application/json; charset=UTF-8'
                 }
+
             })
             const data = await response.json();
-            dispatch(() => showToast());
-
-
+            dispatch(showToast());
             return data;
 
         } catch (error) {
@@ -101,7 +103,13 @@ export const getBook = createAsyncThunk('book/getBook',
 
 const bookSlice = createSlice({
     name: "book",
-    initialState: { book: null, isLoading: false, error: null, counter: null, bookInfo: null },
+    initialState: {
+        book: null,
+        isLoading: 'false',
+        error: null,
+        counter: null,
+        bookInfo: null,
+    },
     reducers: {}
     ,
     extraReducers: builder => {
@@ -147,10 +155,15 @@ const bookSlice = createSlice({
             console.log(action);
         })
         builder.addCase(deleteBook.fulfilled, (state, action) => {
+
             state.isLoading = false;
             state.error = null;
             state.book = state.book.filter(book => book.id !== action.payload.id)
-            console.log(state.book);
+
+            // console.log(state.book);
+            // console.log(state.isLoading);
+            console.log(action);
+
         })
         builder.addCase(deleteBook.rejected, (state, action) => {
             state.isLoading = false;
